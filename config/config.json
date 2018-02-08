@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": null,
+    "password": null,
+    "database": "slip-list-development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": null,
+    "password": null,
+    "database": "slip-list-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": null,
+    "password": null,
+    "database": "slip-list-production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
