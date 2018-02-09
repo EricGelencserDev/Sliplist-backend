@@ -12,7 +12,8 @@
     "express-validator": "^4.3.0",
     "pg": "6.1.5",
     "sequelize": "3.30.4",
-    "sequelize-cli": "^3.2.0"
+    "sequelize-cli": "^3.2.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "babel-jest": "^22.1.0",

@@ -10,6 +10,27 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(validator())
 
+const authorization = function(request , response, next){
+	const token = request.query.authToken || request.body.authToken
+	if(token){
+		User.findOne({
+			where: {authToken: token}
+		}).then((user)=>{
+		  if(user){
+			  request.currentUser = user
+			  next()
+		 	}else{
+			 response.status(401)
+			 response.json({message: 'Authorization Token Invalid'})
+			  }
+		    })
+		}else{
+			response.status(401)
+			response.json({message: 'Authorization Token Required'})
+		}
+	}
+
+
 app.get('/', (req, res) => {
 	res.json({message: 'API Example App'})
 });
@@ -48,12 +69,13 @@ app.post('/availabilities', (req, res) => {
 
 //Begins 'get' and 'post' process for /users route path.
 
-app.get('/users', (req, res) => {
-	Available.findAll().then( (users) =>{
-		res.json({users:users})
-	})
+app.get('/users',
+	authorization,
+	(req, res) => {
+		User.findAll().then( (users) =>{
+			res.json({users:users})
+		})
 })
-
 
 app.post('/users', (req, res) => {
 		req.checkBody('firstname', 'Is required').notEmpty()
@@ -74,8 +96,8 @@ app.post('/users', (req, res) => {
 	}).then((user)=>{
 	    res.status(201)
 	    res.json({user: user})
-	 })
-	  	}else{
+		})
+	  }else{
 		res.status(400)
 		res.json({errors: {validations: validationErrors.array()}})
 	  }
