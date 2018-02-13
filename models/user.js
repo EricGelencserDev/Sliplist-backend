@@ -30,11 +30,10 @@ module.exports = (sequelize, DataTypes) => {
 	authToken: DataTypes.STRING,
 	authTokenExpiration: DataTypes.DATE,
 	salt: DataTypes.STRING
-	},
-	{
+	}, {
 	setterMethods:{
-			password(value){
-			  if(value){
+			password(value) {
+			  if(value) {
 				const salt = uuid();
 				this.setDataValue('salt', salt)
 				const hash = this.encrypt(value);
@@ -43,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	},
   instanceMethods:{
-      toJSON(){
+      toJSON() {
         return {
           id: this.get('id'),
           firstName: this.get('firstName'),
@@ -51,15 +50,15 @@ module.exports = (sequelize, DataTypes) => {
           email: this.get('email'),
           authToken: this.get('authToken'),
           authTokenExpiration: this.get('authTokenExpiration')
-          }
+        }
 	    },
-		encrypt(value){
+		encrypt(value) {
 			const salt = this.get('salt');
 			return crypto.createHmac('sha512' , salt)
 				.update(value)
 				.digest('hex')
 		},
-		setAuthToken(){
+		setAuthToken() {
 	        const token = uuid()
 	        const expiration = new Date()
 	        expiration.setMonth(expiration.getMonth() + 1)

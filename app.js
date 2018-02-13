@@ -1,11 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser')
 var validator = require('express-validator')
+var cors = require('cors')
 var app = express();
 const { Available } = require('./models')
 const { User } = require('./models')
 
-
+app.use(cors())
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(validator())
