@@ -27,10 +27,16 @@ module.exports = (sequelize, DataTypes) => {
 		type: DataTypes.STRING,
 		allowNull: false
 	},
-	authToken: DataTypes.STRING,
-	authTokenExpiration: DataTypes.DATE,
-	salt: DataTypes.STRING
+	authToken: {
+		type: DataTypes.STRING
 	},
+	authTokenExpiration: {
+		type: DataTypes.DATE
+	},
+	salt: {
+		type: DataTypes.STRING
+	},
+}
 	{
 	setterMethods:{
 			password(value){
