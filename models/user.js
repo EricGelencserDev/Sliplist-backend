@@ -71,8 +71,8 @@ module.exports = (sequelize, DataTypes) => {
 			  return encryptedUnverifiedPassword === this.get('encryptedPassword')
 		  }
   		},
-		hooks:{
-			beforeCreate: function(user , options) {
+		hooks: {
+			beforeCreate: function(user, options) {
 				user.setAuthToken()
 			}
 		}

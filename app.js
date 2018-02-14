@@ -71,11 +71,9 @@ app.post('/availabilities', (req, res) => {
 
 //Begins 'get' and 'post' process for /users route path.
 
-app.get('/users',
-authorization,
-	(req, res) => {
+app.get('/users', (req, res) => {
 		User.findAll().then( (users) =>{
-			res.json({users:users})
+			res.json({users: users})
 		})
 })
 
