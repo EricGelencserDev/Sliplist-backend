@@ -20,7 +20,7 @@ const authorization = function(request , response, next){
 		}).then((user)=>{
 		  if(user){
 			  request.currentUser = user
-			  next()
+			  next() 
 		 	}else{
 			 response.status(401)
 			 response.json({message: 'Authorization Token Invalid'})
