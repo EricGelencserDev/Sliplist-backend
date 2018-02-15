@@ -3,13 +3,15 @@ var bodyParser = require('body-parser')
 var validator = require('express-validator')
 var cors = require('cors')
 var app = express();
+var cors = require('cors')
 const { Available } = require('./models')
 const { User } = require('./models')
 
 app.use(cors())
 app.use(express.static('public'))
-app.use(bodyParser.json())
 app.use(validator())
+app.use(bodyParser.json())
+app.use(cors())
 
 const authorization = function(request , response, next){
 	const token = request.query.authToken || request.body.authToken
@@ -19,7 +21,7 @@ const authorization = function(request , response, next){
 		}).then((user)=>{
 		  if(user){
 			  request.currentUser = user
-			  next()
+			  next() 
 		 	}else{
 			 response.status(401)
 			 response.json({message: 'Authorization Token Invalid'})
@@ -70,11 +72,9 @@ app.post('/availabilities', (req, res) => {
 
 //Begins 'get' and 'post' process for /users route path.
 
-app.get('/users',
-	authorization,
-	(req, res) => {
+app.get('/users', (req, res) => {
 		User.findAll().then( (users) =>{
-			res.json({users:users})
+			res.json({users: users})
 		})
 })
 
