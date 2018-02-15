@@ -4,7 +4,7 @@ var validator = require('express-validator')
 var cors = require('cors')
 var app = express();
 var cors = require('cors')
-const { Available } = require('./models')
+const { Availability } = require('./models')
 const { User } = require('./models')
 
 app.use(cors())
@@ -21,7 +21,7 @@ const authorization = function(request , response, next){
 		}).then((user)=>{
 		  if(user){
 			  request.currentUser = user
-			  next() 
+			  next()
 		 	}else{
 			 response.status(401)
 			 response.json({message: 'Authorization Token Invalid'})
@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/availabilities', (req, res) => {
-	Available.findAll().then( (availabilities) =>{
+	Availability.findAll().then( (availabilities) =>{
 		res.json({availabilities:availabilities})
 	})
 })
@@ -54,7 +54,7 @@ app.post('/availabilities', (req, res) => {
 	req.getValidationResult()
 	  .then((validationErrors) =>{
 		if(validationErrors.isEmpty()){
-	  Available.create({
+	  Availability.create({
 	    loa: req.body.loa,
 	    kind: req.body.kind,
 	    location: req.body.location,

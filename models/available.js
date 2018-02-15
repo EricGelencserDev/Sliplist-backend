@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Available = sequelize.define('Available', {
+  var Available = sequelize.define('Availability', {
     loa: DataTypes.INTEGER,
     kind: DataTypes.STRING,
     location: DataTypes.STRING,
