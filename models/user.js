@@ -72,6 +72,7 @@ module.exports = (sequelize, DataTypes) => {
 					expiration.setMonth(expiration.getMonth() + 1)
 					this.setDataValue('authToken', token)
 					this.setDataValue('authTokenExpiration', expiration)
+
 	},
 		verifyPassword(unverifiedPassword) {
 			const encryptedUnverifiedPassword = this.encrypt(unverifiedPassword);
