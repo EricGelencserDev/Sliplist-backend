@@ -3,51 +3,51 @@ const crypto = require('crypto')
 const uuid = require('uuid/v1')
 
 module.exports = (sequelize, DataTypes) => {
-	var User = sequelize.define('User', {
-		firstname: {
-			type: DataTypes.STRING,
-			allowNull: false
-		},
-		lastname: {
-			type: DataTypes.STRING,
-			allowNull: false
-		},
-		email: {
-			type: DataTypes.STRING,
-			allowNull: false,
-				validate:{
-					isEmail: true
-			}
-		},
-		phone: {
-			type: DataTypes.STRING,
-			allowNull: false
-		},
-		encryptedPassword: {
-			type: DataTypes.STRING,
-			allowNull: false
-		},
-		authToken: {
-			type: DataTypes.STRING
-		},
-		authTokenExpiration: {
-			type: DataTypes.DATE
-		},
-		salt: {
-			type: DataTypes.STRING
-		},
-	},
+    var User = sequelize.define('User', {
+        firstname: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        lastname: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+                validate:{
+                    isEmail: true
+            }
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        encryptedPassword: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        authToken: {
+            type: DataTypes.STRING
+        },
+        authTokenExpiration: {
+            type: DataTypes.DATE
+        },
+        salt: {
+            type: DataTypes.STRING
+        },
+    },
 
 {
-	setterMethods:{
-		password(value){
-		if(value){
-		const salt = uuid();
-			this.setDataValue('salt', salt)
-			const hash = this.encrypt(value);
-			this.setDataValue('encryptedPassword', hash)
-		}
-	}
+    setterMethods:{
+        password(value){
+        if(value){
+        const salt = uuid();
+            this.setDataValue('salt', salt)
+            const hash = this.encrypt(value);
+            this.setDataValue('encryptedPassword', hash)
+        }
+    }
 },
 	instanceMethods:{
 		toJSON(){
