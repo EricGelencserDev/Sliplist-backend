@@ -6,8 +6,6 @@ var app = express();
 var cors = require('cors')
 const { Availability } = require('./models')
 const { User } = require('./models')
-const staticFiles = express.static(path.join(__dirname, '../../sliplist-front/build'))
-
 
 app.use(express.static('public'))
 app.use(validator())
@@ -36,22 +34,17 @@ const authorization = function(request , response, next){
 	}
 
 
-app.get('/', (req, res) => {
-	res.json({message: 'API Example App'})
-});
-
 app.get('/availabilities', (req, res) => {
 	Availability.findAll().then( (availabilities) =>{
 		res.json({availabilities:availabilities})
 	})
 })
 
-
 app.post('/availabilities', (req, res) => {
-		req.checkBody('loa', 'Is required').notEmpty()
-		req.checkBody('kind', 'Is required').notEmpty()
-		req.checkBody('location', 'Is required').notEmpty()
-		req.checkBody('description', 'Is required').notEmpty()
+	req.checkBody('loa', 'Is required').notEmpty()
+	req.checkBody('kind', 'Is required').notEmpty()
+	req.checkBody('location', 'Is required').notEmpty()
+	req.checkBody('description', 'Is required').notEmpty()
 
 	req.getValidationResult()
 	  .then((validationErrors) =>{
@@ -137,9 +130,12 @@ app.post('/users', (req, res) => {
 		res.status(400)
 		res.json({errors: {validations: validationErrors.array()}})
 	  }
+	  catch(err){
+		  console.log(err)
+	  }
 	})
 })
 
-app.use('/*', staticFiles)
+app.use('*', express.static(path.resolve(__dirname, '../sliplist-front/build')))
 
 module.exports = app
