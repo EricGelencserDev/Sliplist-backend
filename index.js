@@ -1,6 +1,7 @@
 const app = require('./app')
-app.set('port', (process.env.PORT || 3001))
 
-app.listen(app.get('port'), () => {
-	console.log("Listening")
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT || 3001
+
+app.listen(PORT, () => {
+	console.log("Listening on:", PORT)
 })
