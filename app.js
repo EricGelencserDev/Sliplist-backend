@@ -1,14 +1,14 @@
-var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser')
 var validator = require('express-validator')
-var app = express();
 var cors = require('cors')
+var app = express();
 const { Availability } = require('./models')
 const { User } = require('./models')
+
 const staticFiles = express.static(path.join(__dirname, '../../sliplist-front/build'))
 
-
+app.use(cors())
 app.use(express.static('public'))
 app.use(validator())
 app.use(bodyParser.json())
@@ -21,6 +21,7 @@ app.use(function(req, res, next){
 })
 
 app.use(staticFiles)
+
 const authorization = function(request , response, next){
 	const token = request.query.authToken || request.body.authToken
 	if(token){
@@ -78,8 +79,6 @@ app.post('/availabilities', (req, res) => {
 	})
 })
 
-// Begins 'get' and 'post' process for /users route path.
-
 app.get('/users', (req, res) => {
 		User.findAll().then( (users) =>{
 			res.json({users: users})
@@ -117,7 +116,6 @@ app.post('/users/signin', (req, res) => {
         }
     })
 })
-
 
 app.post('/users', (req, res) => {
 		req.checkBody('firstname', 'Is required').notEmpty()
