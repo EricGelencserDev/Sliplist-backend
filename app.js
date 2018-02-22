@@ -14,6 +14,12 @@ app.use(validator())
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use(function(req, res, next){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+})
+
 app.use(staticFiles)
 const authorization = function(request , response, next){
 	const token = request.query.authToken || request.body.authToken
@@ -74,11 +80,11 @@ app.post('/availabilities', (req, res) => {
 
 // Begins 'get' and 'post' process for /users route path.
 
-// app.get('/users', (req, res) => {
-// 		User.findAll().then( (users) =>{
-// 			res.json({users: users})
-// 		})
-// })
+app.get('/users', (req, res) => {
+		User.findAll().then( (users) =>{
+			res.json({users: users})
+		})
+})
 
 app.post('/users/signin', (req, res) => {
     req.checkBody('email', 'Is required').notEmpty()
