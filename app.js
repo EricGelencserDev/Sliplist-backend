@@ -6,21 +6,16 @@ var app = express();
 const { Availability } = require('./models')
 const { User } = require('./models')
 
-const staticFiles = express.static(path.join(__dirname, '../../sliplist-front/build'))
-
-app.use(cors())
 app.use(express.static('public'))
 app.use(validator())
 app.use(bodyParser.json())
 app.use(cors())
 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
 })
-
-app.use(staticFiles)
 
 const authorization = function(request , response, next){
 	const token = request.query.authToken || request.body.authToken
@@ -143,7 +138,5 @@ app.post('/users', (req, res) => {
 	  }
 	})
 })
-
-app.use('/*', staticFiles)
 
 module.exports = app
