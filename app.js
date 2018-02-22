@@ -119,23 +119,28 @@ app.post('/users', (req, res) => {
 		req.checkBody('password', 'Is required').notEmpty()
 		req.checkBody('phone', 'Is required').notEmpty()
 
-	req.getValidationResult()
-	  .then((validationErrors) =>{
-		if(validationErrors.isEmpty()){
-	  User.create({
-	    firstname: req.body.firstname,
-	    lastname: req.body.lastname,
-	    email: req.body.email,
-		password: req.body.password,
-		phone: req.body.phone
-	}).then((user)=>{
-	    res.status(201)
-	    res.json({user: user})
-		})
-	  }else{
-		res.status(400)
-		res.json({errors: {validations: validationErrors.array()}})
-	  }
+	// req.getValidationResult()
+	//   .then((validationErrors) =>{
+	// 	if(validationErrors.isEmpty()){
+	//   User.create({
+	//     firstname: req.body.firstname,
+	//     lastname: req.body.lastname,
+	//     email: req.body.email,
+	// 	password: req.body.password,
+	// 	phone: req.body.phone
+	// }).then((user)=>{
+	//     res.status(201)
+	//     res.json({user: user})
+	// 	})
+	//   }else{
+	// 	res.status(400)
+	// 	res.json({errors: {validations: validationErrors.array()}})
+	//   }
+	// })
+
+	res.json({
+		success: true,
+		message: "it works!"
 	})
 })
 
