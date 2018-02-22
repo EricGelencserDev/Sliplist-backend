@@ -113,35 +113,52 @@ app.post('/users/signin', (req, res) => {
 })
 
 app.post('/users', (req, res) => {
-		req.checkBody('firstname', 'Is required').notEmpty()
-		req.checkBody('lastname', 'Is required').notEmpty()
-		req.checkBody('email', 'Is required').notEmpty()
-		req.checkBody('password', 'Is required').notEmpty()
-		req.checkBody('phone', 'Is required').notEmpty()
+	req.checkBody('firstname', 'Is required').notEmpty()
+	req.checkBody('lastname', 'Is required').notEmpty()
+	req.checkBody('email', 'Is required').notEmpty()
+	req.checkBody('password', 'Is required').notEmpty()
+	req.checkBody('phone', 'Is required').notEmpty()
 
-	// req.getValidationResult()
-	//   .then((validationErrors) =>{
-	// 	if(validationErrors.isEmpty()){
-	//   User.create({
-	//     firstname: req.body.firstname,
-	//     lastname: req.body.lastname,
-	//     email: req.body.email,
-	// 	password: req.body.password,
-	// 	phone: req.body.phone
-	// }).then((user)=>{
-	//     res.status(201)
-	//     res.json({user: user})
-	// 	})
-	//   }else{
-	// 	res.status(400)
-	// 	res.json({errors: {validations: validationErrors.array()}})
-	//   }
-	// })
+	req.getValidationResult()
+	.then((validationErrors) => {
+		if(validationErrors.isEmpty()){
+			User.create({
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
+				email: req.body.email,
+				password: req.body.password,
+				phone: req.body.phone
+			})
+			.then((user) => {
+				res.status(201)
+				res.json({
+					user: user
+				})
+			})
+			.catch((error) => {
+				console.log("user create catch error", error)
 
-	res.json({
-		success: true,
-		message: "it works!"
+				res.json({
+					errors: error
+				})
+			})
+		} else {
+			res.status(400)
+			res.json({
+				errors: {
+					validations: validationErrors.array()
+				}
+			})
+		}
 	})
+	.catch((error) => {
+		console.log("validation catch error", error)
+
+		res.json({
+			errors: error
+		})
+	})
+
 })
 
 module.exports = app
