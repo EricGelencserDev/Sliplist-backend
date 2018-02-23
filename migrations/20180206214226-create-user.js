@@ -17,7 +17,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-
+	  authToken: {
+		  type: Sequelize.STRING
+	  },
 	  encryptedPassword:{
 	   type: Sequelize.STRING
 	  },
