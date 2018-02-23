@@ -21,21 +21,24 @@ module.exports = {
 		  type: Sequelize.STRING
 	  },
 	  encryptedPassword: {
-		  type: DataTypes.STRING
+		  type: Sequelize.STRING,
+		  allowNull: false
 	  },
 	  authTokenExpiration: {
-		  type: DataTypes.DATE
+		  type: Sequelize.DATE
 	  },
 	  salt: {
-		  type: DataTypes.STRING
+		  type: Sequelize.STRING
 	  },
       phone: {
         type: Sequelize.STRING
       },
       createdAt: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
+        allowNull: false,
         type: Sequelize.DATE
       }
     });
