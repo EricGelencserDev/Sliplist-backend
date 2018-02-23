@@ -20,8 +20,15 @@ module.exports = {
 	  authToken: {
 		  type: Sequelize.STRING
 	  },
-	  encryptedPassword:{
-	   type: Sequelize.STRING
+	  encryptedPassword: {
+		  type: DataTypes.STRING,
+		  allowNull: false
+	  },
+	  authTokenExpiration: {
+		  type: DataTypes.DATE
+	  },
+	  salt: {
+		  type: DataTypes.STRING
 	  },
       phone: {
         type: Sequelize.STRING
